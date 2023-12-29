@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>713</width>
+    <height>507</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QTableWidget" name="tableAlunos">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>40</y>
-      <width>651</width>
-      <height>331</height>
+      <x>20</x>
+      <y>20</y>
+      <width>671</width>
+      <height>371</height>
      </rect>
     </property>
     <column>
@@ -49,24 +49,11 @@
      </property>
     </column>
    </widget>
-   <widget class="QPushButton" name="btnConsultar">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>440</y>
-      <width>120</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Listar Alunos</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnNovoAluno">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>440</y>
+      <x>290</x>
+      <y>410</y>
       <width>120</width>
       <height>32</height>
      </rect>
@@ -75,11 +62,24 @@
      <string>Incluir Aluno</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="btnAlterarAluno">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>410</y>
+      <width>120</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Alterar Aluno</string>
+    </property>
+   </widget>
    <widget class="QPushButton" name="btnExcluirAluno">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>440</y>
+      <x>570</x>
+      <y>410</y>
       <width>120</width>
       <height>32</height>
      </rect>
@@ -94,7 +94,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>713</width>
      <height>22</height>
     </rect>
    </property>
