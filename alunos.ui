@@ -17,11 +17,24 @@
    <widget class="QTableWidget" name="tableAlunos">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>120</y>
+      <x>230</x>
+      <y>180</y>
       <width>256</width>
       <height>192</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnConsultar">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>430</y>
+      <width>100</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Consultar</string>
     </property>
    </widget>
   </widget>

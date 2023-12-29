@@ -6,7 +6,7 @@ import mysql.connector
 class AlunoApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        loadUi("sua_interface.ui", self)  # Substitua "sua_interface.ui" pelo caminho do seu arquivo .ui
+        loadUi("alunos.ui", self)
         self.initUI()
 
     def initUI(self):
@@ -19,7 +19,7 @@ class AlunoApp(QMainWindow):
                 host="localhost",
                 user="root",
                 password="password",
-                database="`centroexplicacoes2"
+                database="centroexplicacoes2"
             )
 
             cursor = connection.cursor()
@@ -50,7 +50,7 @@ def main():
     app = QApplication(sys.argv)
     window = AlunoApp()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
 if __name__ == "__main__":
     main()
