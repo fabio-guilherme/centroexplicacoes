@@ -17,24 +17,62 @@
    <widget class="QTableWidget" name="tableAlunos">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>180</y>
-      <width>256</width>
-      <height>192</height>
+      <x>40</x>
+      <y>40</y>
+      <width>651</width>
+      <height>331</height>
      </rect>
     </property>
+    <column>
+     <property name="text">
+      <string>Id</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Nome</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Contato</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>N. Ensino</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>NIF</string>
+     </property>
+    </column>
    </widget>
    <widget class="QPushButton" name="btnConsultar">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>430</y>
+      <x>50</x>
+      <y>440</y>
       <width>100</width>
       <height>32</height>
      </rect>
     </property>
     <property name="text">
-     <string>Consultar</string>
+     <string>Listar Alunos</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnNovoAluno">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>440</y>
+      <width>100</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Incluir Aluno</string>
     </property>
    </widget>
   </widget>
