@@ -2,9 +2,9 @@ from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem, QDialog, QMessageBox,
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import Qt
 from mysql_connector import conecta
-from incluir_aluno import IncluirAluno
+from aluno import Aluno
 
-class Aluno(QMainWindow):
+class Alunos(QMainWindow):
     def __init__(self):
         super().__init__()
         loadUi("ui/alunos.ui", self)
@@ -13,18 +13,15 @@ class Aluno(QMainWindow):
         # Consulta automaticamente os alunos ao abrir a janela
         self.consultar_alunos()
 
-        # Conectar o sinal ao método que atualiza a lista de alunos
-        self.janela_incluir_aluno = IncluirAluno()
-        self.janela_incluir_aluno.aluno_adicionado.connect(self.atualizar_lista_alunos)
-
     def initUI(self):
-        # self.btnConsultar.clicked.connect(self.consultar_alunos)
-        self.btnNovoAluno.clicked.connect(self.abrir_janela_novo_aluno)
+        self.btnIncluirAluno.clicked.connect(self.abrir_janela_aluno)
+        self.btnAlterarAluno.clicked.connect(self.abrir_janela_aluno_para_alterar)
         self.btnExcluirAluno.clicked.connect(self.excluir_aluno)
 
         # Configurar a tabela para seleção por linha
         self.tableAlunos.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
         self.tableAlunos.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        self.tableAlunos.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
 
     def consultar_alunos(self):
         # Configurar a conexão com o banco de dados
@@ -54,12 +51,24 @@ class Aluno(QMainWindow):
                 cursor.close()
                 connection.close()
 
-    def abrir_janela_novo_aluno(self):
-        self.janela_incluir_aluno.exec()
+    def abrir_janela_aluno(self, aluno_id=0):
+        janela_aluno = Aluno(aluno_id)
+        janela_aluno.aluno_atualizado.connect(self.consultar_alunos)
+        janela_aluno.exec()
 
-    def atualizar_lista_alunos(self):
-        # Método para atualizar a lista de alunos
-        self.consultar_alunos()
+    def abrir_janela_aluno_para_alterar(self):
+        # Obter a linha selecionada
+        selected_row = self.tableAlunos.currentRow()
+
+        if selected_row >= 0:
+            # Obter o ID do aluno a partir da coluna 0 (ID)
+            aluno_id = int(self.tableAlunos.item(selected_row, 0).text())
+
+            # Abrir a janela do aluno para edição
+            self.abrir_janela_aluno(aluno_id)
+        else:
+            # Nenhuma linha selecionada, exibir mensagem informativa
+            QMessageBox.information(self, 'Seleção Necessária', 'Por favor, selecione um aluno para editar.')
 
     def excluir_aluno(self):
         # Obter a linha selecionada
@@ -98,7 +107,7 @@ class Aluno(QMainWindow):
             connection.commit()
 
             # Atualizar a lista de alunos após a exclusão
-            self.atualizar_lista_alunos()
+            self.consultar_alunos()
 
         except Exception as e:
             print("Erro ao excluir aluno:", e)

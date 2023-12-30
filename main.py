@@ -1,10 +1,10 @@
 import sys
 from PyQt6.QtWidgets import QApplication
-from alunos import Aluno
+from alunos import Alunos
 
 def main():
     app = QApplication(sys.argv)
-    window = Aluno()
+    window = Alunos()
     window.show()
     sys.exit(app.exec())
 
