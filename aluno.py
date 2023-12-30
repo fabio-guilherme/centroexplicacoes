@@ -26,23 +26,25 @@ class Aluno(QDialog):
         # Obter os dados do formulário
         nome = self.lineEditNome.text()
         contato = self.lineEditContato.text()
+        n_ensino = self.lineEditNEnsino.text()
+        nif = self.lineEditNIF.text()
 
         if self.aluno_id:
             # Se aluno_id existe, atualizar o aluno
-            self.atualizar_aluno(nome, contato)
+            self.atualizar_aluno(nome, contato, n_ensino, nif)
         else:
             # Caso contrário, incluir um novo aluno
-            self.incluir_aluno(nome, contato)
+            self.incluir_aluno(nome, contato, n_ensino, nif)
 
-    def incluir_aluno(self, nome, contato):
+    def incluir_aluno(self, nome, contato, n_ensino, nif):
         # Lógica para incluir um novo aluno no banco de dados
         try:
             connection = conecta()
             cursor = connection.cursor()
 
             # Inserir um novo aluno
-            query = "INSERT INTO aluno (Nome, Contato) VALUES (%s, %s)"
-            values = (nome, contato)
+            query = "INSERT INTO aluno (Nome, Contato, Nensino, Nif) VALUES (%s, %s, %s, %s)"
+            values = (nome, contato, n_ensino, nif)
             cursor.execute(query, values)
 
             # Commit da transação
@@ -68,7 +70,7 @@ class Aluno(QDialog):
             cursor = connection.cursor()
 
             # Consultar os dados do aluno pelo ID
-            query = "SELECT Nome, Contato FROM aluno WHERE idAluno = %s"
+            query = "SELECT Nome, Contato, Nensino, Nif FROM aluno WHERE idAluno = %s"
             cursor.execute(query, (aluno_id,))
 
             aluno_data = cursor.fetchone()
@@ -77,6 +79,8 @@ class Aluno(QDialog):
                 # Preencher os campos do formulário com os dados do aluno
                 self.lineEditNome.setText(aluno_data[0])
                 self.lineEditContato.setText(aluno_data[1])
+                self.lineEditNEnsino.setText(aluno_data[2])
+                self.lineEditNIF.setText(aluno_data[3])
 
         except Exception as e:
             print("Erro ao carregar dados do aluno:", e)
@@ -86,14 +90,14 @@ class Aluno(QDialog):
                 cursor.close()
                 connection.close()
 
-    def atualizar_aluno(self, nome, contato):
+    def atualizar_aluno(self, nome, contato, n_ensino, nif):
         try:
             connection = conecta()
             cursor = connection.cursor()
 
             # Atualizar os dados do aluno no banco de dados
-            query = "UPDATE aluno SET Nome = %s, Contato = %s WHERE idAluno = %s"
-            values = (nome, contato, self.aluno_id)
+            query = "UPDATE aluno SET Nome = %s, Contato = %s, Nensino = %s, Nif = %s WHERE idAluno = %s"
+            values = (nome, contato, n_ensino, nif, self.aluno_id)
             cursor.execute(query, values)
 
             # Commit da transação
