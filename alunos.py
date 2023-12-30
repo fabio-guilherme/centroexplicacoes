@@ -1,4 +1,5 @@
-from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem, QDialog, QMessageBox, QTableWidget, QAbstractItemView
+from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem, QDialog, QMessageBox, QTableWidget, QAbstractItemView, \
+    QHeaderView
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import Qt
 from mysql_connector import conecta
@@ -22,6 +23,10 @@ class Alunos(QMainWindow):
         self.tableAlunos.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
         self.tableAlunos.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.tableAlunos.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+
+        # Ajustar as larguras das colunas
+        for column_index in range(self.tableAlunos.columnCount()):
+            self.tableAlunos.horizontalHeader().setSectionResizeMode(column_index, QHeaderView.ResizeMode.Stretch)
 
     def consultar_alunos(self):
         # Configurar a conexão com o banco de dados
