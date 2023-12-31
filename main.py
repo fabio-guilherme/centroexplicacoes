@@ -26,7 +26,7 @@ class MainWindow(QMainWindow):
         self.stacked_widget.addWidget(self.disciplinas_screen)
 
         # Definir a tela inicial como um widget vazio
-        self.stacked_widget.setCurrentWidget(QWidget())
+        #self.stacked_widget.setCurrentWidget(None)
 
     def setup_menu_actions(self):
         # Ação do menu para abrir a tela de Alunos

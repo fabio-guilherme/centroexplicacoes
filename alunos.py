@@ -46,6 +46,11 @@ class Alunos(QMainWindow):
                 self.tableAlunos.insertRow(row_index)
                 for col_index, col_data in enumerate(row_data):
                     item = QTableWidgetItem(str(col_data))
+
+                    # Verificar se o valor é numérico antes de ajustar o alinhamento
+                    if isinstance(col_data, (int, float)):
+                        item.setTextAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+
                     self.tableAlunos.setItem(row_index, col_index, item)
 
         except Exception as e:

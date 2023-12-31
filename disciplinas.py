@@ -1,4 +1,5 @@
-from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem, QDialog, QMessageBox, QTableWidget, QAbstractItemView, QApplication
+from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem, QDialog, QMessageBox, QTableWidget, QAbstractItemView, \
+    QApplication, QHeaderView
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import Qt
 from mysql_connector import conecta
@@ -22,6 +23,10 @@ class Disciplinas(QMainWindow):
         self.tableDisciplinas.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
         self.tableDisciplinas.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
 
+        # Ajustar as larguras das colunas
+        for column_index in range(self.tableDisciplinas.columnCount()):
+            self.tableDisciplinas.horizontalHeader().setSectionResizeMode(column_index, QHeaderView.ResizeMode.Stretch)
+
     def consultar_disciplinas(self):
         # Configurar a conexão com o banco de dados
         try:
@@ -40,6 +45,11 @@ class Disciplinas(QMainWindow):
                 self.tableDisciplinas.insertRow(row_index)
                 for col_index, col_data in enumerate(row_data):
                     item = QTableWidgetItem(str(col_data))
+
+                    # Verificar se o valor é numérico antes de ajustar o alinhamento
+                    if isinstance(col_data, (int, float)):
+                        item.setTextAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+
                     self.tableDisciplinas.setItem(row_index, col_index, item)
 
         except Exception as e:
