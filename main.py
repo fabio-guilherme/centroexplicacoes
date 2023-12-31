@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QApplication, QMainWindow, QStackedWidget, QVBoxLayout, QWidget
 from PyQt6.QtGui import QAction, QIcon
 from PyQt6.uic import loadUi
+
 from alunos import Alunos
 from disciplinas import Disciplinas
 
@@ -24,8 +25,8 @@ class MainWindow(QMainWindow):
         self.stacked_widget.addWidget(self.alunos_screen)
         self.stacked_widget.addWidget(self.disciplinas_screen)
 
-        # Definir a tela inicial
-        self.stacked_widget.setCurrentWidget(self.alunos_screen)
+        # Definir a tela inicial como um widget vazio
+        self.stacked_widget.setCurrentWidget(QWidget())
 
     def setup_menu_actions(self):
         # Ação do menu para abrir a tela de Alunos
