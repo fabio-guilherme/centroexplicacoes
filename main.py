@@ -4,7 +4,8 @@ from PyQt6.uic import loadUi
 
 from alunos import Alunos
 from disciplinas import Disciplinas
-from professores import Professores  # Importe a classe Professores
+from professores import Professores
+from aulas import Aulas
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -24,9 +25,11 @@ class MainWindow(QMainWindow):
         self.alunos_screen = Alunos()
         self.disciplinas_screen = Disciplinas()
         self.professores_screen = Professores()
+        self.aulas_screen = Aulas()
         self.stacked_widget.addWidget(self.alunos_screen)
         self.stacked_widget.addWidget(self.disciplinas_screen)
         self.stacked_widget.addWidget(self.professores_screen)
+        self.stacked_widget.addWidget(self.aulas_screen)
 
         # Definir a tela inicial como um widget vazio
         #self.stacked_widget.setCurrentWidget(None)
@@ -47,6 +50,11 @@ class MainWindow(QMainWindow):
         self.action_professores.triggered.connect(self.show_professores_screen)
         self.menuCadastros.addAction(self.action_professores)
 
+        # Ação do menu para abrir a tela de Aulas
+        self.action_aulas = QAction('Aulas', self)
+        self.action_aulas.triggered.connect(self.show_aulas_screen)
+        self.menuCadastros.addAction(self.action_aulas)
+
     def show_alunos_screen(self):
         self.stacked_widget.setCurrentWidget(self.alunos_screen)
 
@@ -55,6 +63,9 @@ class MainWindow(QMainWindow):
 
     def show_professores_screen(self):
         self.stacked_widget.setCurrentWidget(self.professores_screen)
+
+    def show_aulas_screen(self):
+        self.stacked_widget.setCurrentWidget(self.aulas_screen)
 
 if __name__ == '__main__':
     app = QApplication([])
