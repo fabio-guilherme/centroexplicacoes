@@ -17,21 +17,13 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QMenuBar" name="menubar">
-      <addaction name="menuAlunos"/>
-      <addaction name="menuDisciplinas"/>
+      <addaction name="menuCadastros"/>
      </widget>
     </item>
     <item>
-     <widget class="QMenu" name="menuAlunos">
+     <widget class="QMenu" name="menuCadastros">
       <property name="title">
-       <string>Alunos</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QMenu" name="menuDisciplinas">
-      <property name="title">
-       <string>Disciplinas</string>
+       <string>Cadastros</string>
       </property>
      </widget>
     </item>

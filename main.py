@@ -32,12 +32,12 @@ class MainWindow(QMainWindow):
         # Ação do menu para abrir a tela de Alunos
         self.action_alunos = QAction('Alunos', self)
         self.action_alunos.triggered.connect(self.show_alunos_screen)
-        self.menuAlunos.addAction(self.action_alunos)
+        self.menuCadastros.addAction(self.action_alunos)
 
         # Ação do menu para abrir a tela de Disciplinas
         self.action_disciplinas = QAction('Disciplinas', self)
         self.action_disciplinas.triggered.connect(self.show_disciplinas_screen)
-        self.menuDisciplinas.addAction(self.action_disciplinas)
+        self.menuCadastros.addAction(self.action_disciplinas)
 
     def show_alunos_screen(self):
         self.stacked_widget.setCurrentWidget(self.alunos_screen)
