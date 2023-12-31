@@ -42,7 +42,7 @@
    <widget class="QPushButton" name="btnIncluirDisciplina">
     <property name="geometry">
      <rect>
-      <x>660</x>
+      <x>340</x>
       <y>510</y>
       <width>120</width>
       <height>32</height>
@@ -68,7 +68,7 @@
    <widget class="QPushButton" name="btnExcluirDisciplina">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>660</x>
       <y>510</y>
       <width>120</width>
       <height>32</height>

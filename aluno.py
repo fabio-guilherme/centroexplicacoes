@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QDialog
+from PyQt6.QtWidgets import QDialog, QMessageBox
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import pyqtSignal
 from mysql_connector import conecta
@@ -28,6 +28,11 @@ class Aluno(QDialog):
         contato = self.lineEditContato.text()
         n_ensino = self.lineEditNEnsino.text()
         nif = self.lineEditNIF.text()
+
+        # Verificar se algum campo está vazio
+        if not nome or not contato or not n_ensino or not nif:
+            QMessageBox.warning(self, 'Campos Vazios', 'Todos os campos são obrigatórios.')
+            return
 
         if self.aluno_id:
             # Se aluno_id existe, atualizar o aluno

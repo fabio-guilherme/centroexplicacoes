@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QDialog
+from PyQt6.QtWidgets import QDialog, QMessageBox
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import pyqtSignal
 from mysql_connector import conecta
@@ -26,6 +26,11 @@ class Disciplina(QDialog):
         # Obter os dados do formulário
         designacao = self.lineEditDesignacao.text()
         valor = self.lineEditValor.text()
+
+        # Verificar se algum campo está vazio
+        if not designacao or not valor:
+            QMessageBox.warning(self, 'Campos Vazios', 'Todos os campos são obrigatórios.')
+            return
 
         if self.disciplina_id:
             # Se disciplina_id existe, atualizar a disciplina
