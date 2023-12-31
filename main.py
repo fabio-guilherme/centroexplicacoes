@@ -1,7 +1,6 @@
 from PyQt6.QtWidgets import QApplication, QMainWindow, QStackedWidget, QVBoxLayout, QWidget
 from PyQt6.QtGui import QAction, QIcon
 from PyQt6.uic import loadUi
-
 from alunos import Alunos
 from disciplinas import Disciplinas
 
@@ -11,8 +10,6 @@ class MainWindow(QMainWindow):
 
         # Carregar a interface principal
         loadUi("ui/main.ui", self)
-        # self.ui = MainWindow()
-        # self.ui.setupUi(self)
 
         # Configurar as ações dos menus
         self.setup_menu_actions()

@@ -17,28 +17,23 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QMenuBar" name="menubar">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>800</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <widget class="QMenu" name="menuAlunos">
-       <property name="title">
-        <string>Alunos</string>
-       </property>
-      </widget>
-      <widget class="QMenu" name="menuDisciplinas">
-       <property name="title">
-        <string>Disciplinas</string>
-       </property>
-      </widget>
+      <addaction name="menuAlunos"/>
+      <addaction name="menuDisciplinas"/>
      </widget>
     </item>
     <item>
-     <widget class="QStackedWidget" name="stackedWidget"/>
+     <widget class="QMenu" name="menuAlunos">
+      <property name="title">
+       <string>Alunos</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QMenu" name="menuDisciplinas">
+      <property name="title">
+       <string>Disciplinas</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
