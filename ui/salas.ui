@@ -14,7 +14,7 @@
    <string>Centro de Explicações</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTableWidget" name="tableAulas">
+   <widget class="QTableWidget" name="tableSalas">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -34,7 +34,7 @@
      </property>
     </column>
    </widget>
-   <widget class="QPushButton" name="btnIncluirAula">
+   <widget class="QPushButton" name="btnIncluirSala">
     <property name="geometry">
      <rect>
       <x>340</x>
@@ -44,10 +44,10 @@
      </rect>
     </property>
     <property name="text">
-     <string>Incluir Aula</string>
+     <string>Incluir Sala</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnAlterarAula">
+   <widget class="QPushButton" name="btnAlterarSala">
     <property name="geometry">
      <rect>
       <x>500</x>
@@ -57,10 +57,10 @@
      </rect>
     </property>
     <property name="text">
-     <string>Alterar Aula</string>
+     <string>Alterar Sala</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnExcluirAula">
+   <widget class="QPushButton" name="btnExcluirSala">
     <property name="geometry">
      <rect>
       <x>660</x>
@@ -70,7 +70,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Excluir Aula</string>
+     <string>Excluir Sala</string>
     </property>
    </widget>
   </widget>

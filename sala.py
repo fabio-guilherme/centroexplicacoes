@@ -3,43 +3,43 @@ from PyQt6.uic import loadUi
 from PyQt6.QtCore import pyqtSignal
 from mysql_connector import conecta
 
-class Aula(QDialog):
-    aula_atualizada = pyqtSignal()
+class Sala(QDialog):
+    sala_atualizada = pyqtSignal()
 
-    def __init__(self, aula_id=0):
+    def __init__(self, sala_id=0):
         super().__init__()
-        loadUi("ui/aula.ui", self)
+        loadUi("ui/sala.ui", self)
         self.initUI()
 
-        # Atributo para armazenar o ID da aula
-        self.aula_id = aula_id
+        # Atributo para armazenar o ID da sala
+        self.sala_id = sala_id
 
-        # Se aula_id for diferente de 0, carregar os dados da aula
-        if aula_id:
-            self.carregar_dados_aula(aula_id)
+        # Se sala_id for diferente de 0, carregar os dados da sala
+        if sala_id:
+            self.carregar_dados_sala(sala_id)
 
     def initUI(self):
-        self.btnSalvar.clicked.connect(self.salvar_aula)
+        self.btnSalvar.clicked.connect(self.salvar_sala)
         self.btnCancelar.clicked.connect(self.fechar_janela)
 
-    def salvar_aula(self):
+    def salvar_sala(self):
         # Obter os dados do formulário
         capacidade = self.spinBoxCapacidade.value()
 
-        if self.aula_id:
-            # Se aula_id existe, atualizar a aula
-            self.atualizar_aula(capacidade)
+        if self.sala_id:
+            # Se sala_id existe, atualizar a sala
+            self.atualizar_sala(capacidade)
         else:
-            # Caso contrário, incluir uma nova aula
-            self.incluir_aula(capacidade)
+            # Caso contrário, incluir uma nova sala
+            self.incluir_sala(capacidade)
 
-    def incluir_aula(self, capacidade):
-        # Lógica para incluir uma nova aula no banco de dados
+    def incluir_sala(self, capacidade):
+        # Lógica para incluir uma nova sala no banco de dados
         try:
             connection = conecta()
             cursor = connection.cursor()
 
-            # Inserir uma nova aula
+            # Inserir uma nova sala
             query = "INSERT INTO sala (Capacidade) VALUES (%s)"
             values = (capacidade,)
             cursor.execute(query, values)
@@ -47,51 +47,51 @@ class Aula(QDialog):
             # Commit da transação
             connection.commit()
 
-            # Emitir o sinal indicando que uma nova aula foi adicionada
-            self.aula_atualizada.emit()
+            # Emitir o sinal indicando que uma nova sala foi adicionada
+            self.sala_atualizada.emit()
 
             # Fechar a janela após a inclusão
             self.accept()
 
         except Exception as e:
-            print("Erro ao incluir aula:", e)
+            print("Erro ao incluir sala:", e)
 
         finally:
             if connection.is_connected():
                 cursor.close()
                 connection.close()
 
-    def carregar_dados_aula(self, aula_id):
+    def carregar_dados_sala(self, sala_id):
         try:
             connection = conecta()
             cursor = connection.cursor()
 
-            # Consultar os dados da aula pelo ID
+            # Consultar os dados da sala pelo ID
             query = "SELECT Capacidade FROM sala WHERE idSala = %s"
-            cursor.execute(query, (aula_id,))
+            cursor.execute(query, (sala_id,))
 
-            aula_data = cursor.fetchone()
+            sala_data = cursor.fetchone()
 
-            if aula_data:
-                # Preencher os campos do formulário com os dados da aula
-                self.spinBoxCapacidade.setValue(aula_data[0])
+            if sala_data:
+                # Preencher os campos do formulário com os dados da sala
+                self.spinBoxCapacidade.setValue(sala_data[0])
 
         except Exception as e:
-            print("Erro ao carregar dados da aula:", e)
+            print("Erro ao carregar dados da sala:", e)
 
         finally:
             if connection.is_connected():
                 cursor.close()
                 connection.close()
 
-    def atualizar_aula(self, capacidade):
+    def atualizar_sala(self, capacidade):
         try:
             connection = conecta()
             cursor = connection.cursor()
 
-            # Atualizar os dados da aula no banco de dados
+            # Atualizar os dados da sala no banco de dados
             query = "UPDATE sala SET Capacidade = %s WHERE idSala = %s"
-            values = (capacidade, self.aula_id)
+            values = (capacidade, self.sala_id)
             cursor.execute(query, values)
 
             # Commit da transação
@@ -100,11 +100,11 @@ class Aula(QDialog):
             # Fechar a janela após a atualização
             self.accept()
 
-            # Emitir o sinal indicando que uma aula foi atualizada
-            self.aula_atualizada.emit()
+            # Emitir o sinal indicando que uma sala foi atualizada
+            self.sala_atualizada.emit()
 
         except Exception as e:
-            print("Erro ao atualizar aula:", e)
+            print("Erro ao atualizar sala:", e)
 
         finally:
             if connection.is_connected():

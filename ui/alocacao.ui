@@ -11,32 +11,32 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Disciplina</string>
+   <string>Alocação</string>
   </property>
-  <widget class="QLabel" name="labelDesignacao">
+  <widget class="QLabel" name="labelDisciplina">
    <property name="geometry">
     <rect>
      <x>30</x>
      <y>30</y>
-     <width>91</width>
+     <width>58</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Designação:</string>
+    <string>Disciplina:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEditDesignacao">
+  <widget class="QComboBox" name="comboDisciplinas">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>100</x>
      <y>30</y>
-     <width>231</width>
-     <height>21</height>
+     <width>271</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="labelValor">
+  <widget class="QLabel" name="labelProfessor">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -46,20 +46,17 @@
     </rect>
    </property>
    <property name="text">
-    <string>Valor:</string>
+    <string>Professor:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEditValor">
+  <widget class="QComboBox" name="comboProfessores">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>100</x>
      <y>80</y>
-     <width>231</width>
-     <height>21</height>
+     <width>271</width>
+     <height>22</height>
     </rect>
-   </property>
-   <property name="text">
-    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btnSalvar">
