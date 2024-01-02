@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Aulas</string>
+  </property>
+  <widget class="QTableWidget" name="tableAulas">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>761</width>
+     <height>531</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>ID</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Data</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Hora</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>ID Inscrição</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QPushButton" name="btnIncluir">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>560</y>
+     <width>120</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Incluir Aula</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnAlterar">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>560</y>
+     <width>120</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Alterar Aula</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnExcluir">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>560</y>
+     <width>120</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Excluir Aula</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
