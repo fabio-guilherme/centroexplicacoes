@@ -3,6 +3,8 @@ from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QMessageBox, QTableWidget
 from PyQt6.uic import loadUi
 from mysql_connector import conecta
 
+from inscricao import Inscricao
+
 class Inscricoes(QDialog):
     def __init__(self):
         super().__init__()
@@ -28,9 +30,9 @@ class Inscricoes(QDialog):
 
         self.atualizar_lista_inscricoes()
 
-    def abrir_janela_inscricao(self):
-        # Abrir a janela de inscrição para inclusão
-        janela_inscricao = Inscricao()
+    def abrir_janela_inscricao(self, inscricao_id=0):
+        # Abrir a janela de inscrição para inclusão ou alteração
+        janela_inscricao = Inscricao(inscricao_id)
         janela_inscricao.inscricao_atualizada.connect(self.atualizar_lista_inscricoes)
         janela_inscricao.exec()
 
@@ -43,10 +45,7 @@ class Inscricoes(QDialog):
             inscricao_id = int(self.tableInscricoes.item(selected_row, 0).text())
 
             # Abrir a janela de inscrição para edição
-            janela_inscricao = Inscricao()
-            janela_inscricao.carregar_inscricao(inscricao_id)
-            janela_inscricao.inscricao_atualizada.connect(self.atualizar_lista_inscricoes)
-            janela_inscricao.exec()
+            self.abrir_janela_inscricao(inscricao_id)
         else:
             # Nenhuma linha selecionada, exibir mensagem informativa
             QMessageBox.information(self, 'Seleção Necessária', 'Por favor, selecione uma inscrição para editar.')
