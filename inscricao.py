@@ -6,20 +6,17 @@ from mysql_connector import conecta, verificar_existencia_id
 class Inscricao(QDialog):
     inscricao_atualizada = pyqtSignal()
 
-    def __init__(self, aluno_id=0, professor_id=0, sala_id=0, disciplina_id=0):
+    def __init__(self, inscricao_id=0):
         super().__init__()
         loadUi("ui/inscricao.ui", self)
         self.initUI()
 
-        # Atributos para armazenar os IDs da inscrição
-        self.aluno_id = aluno_id
-        self.professor_id = professor_id
-        self.sala_id = sala_id
-        self.disciplina_id = disciplina_id
+        # Atributo para armazenar o IDsda inscrição
+        self.inscricao_id = inscricao_id
 
         # Se todos os IDs forem diferentes de 0, carregar os dados da inscrição
-        if aluno_id and professor_id and sala_id and disciplina_id:
-            self.carregar_dados_inscricao(aluno_id, professor_id, sala_id, disciplina_id)
+        if inscricao_id:
+            self.carregar_dados_inscricao(inscricao_id)
 
     def initUI(self):
         self.carregar_combos()
@@ -76,10 +73,11 @@ class Inscricao(QDialog):
 
         # Lógica para verificar se os IDs existem e estão corretos
         if not verificar_existencia_id('aluno', aluno_id) or \
-           not verificar_existencia_id('professor', professor_id) or \
-           not verificar_existencia_id('sala', sala_id) or \
-           not verificar_existencia_id('disciplina', disciplina_id):
-            QMessageBox.warning(self, 'IDs Inválidos', 'Por favor, insira IDs válidos para Aluno, Professor, Sala e Disciplina.')
+                not verificar_existencia_id('professor', professor_id) or \
+                not verificar_existencia_id('sala', sala_id) or \
+                not verificar_existencia_id('disciplina', disciplina_id):
+            QMessageBox.warning(self, 'IDs Inválidos',
+                                'Por favor, insira IDs válidos para Aluno, Professor, Sala e Disciplina.')
             return
 
         # Lógica para salvar a inscrição no banco de dados
@@ -87,52 +85,87 @@ class Inscricao(QDialog):
             connection = conecta()
             cursor = connection.cursor()
 
-            # Lógica para salvar a inscrição no banco de dados
-            query = """
-                INSERT INTO inscrição (Aluno_idAluno, Professor_idProfessor, Sala_idSala, Disciplina_idDisciplina)
-                VALUES (%s, %s, %s, %s)
-            """
-            values = (aluno_id, professor_id, sala_id, disciplina_id)
+            if self.inscricao_id == 0:
+                # Se inscricao_id for 0, é uma nova inscrição, fazer a inserção
+                query = """
+                    INSERT INTO inscrição (Aluno_idAluno, Professor_idProfessor, Sala_idSala, Disciplina_idDisciplina)
+                    VALUES (%s, %s, %s, %s)
+                """
+            else:
+                # Se inscricao_id for diferente de 0, é uma atualização, fazer o update
+                query = """
+                    UPDATE inscrição
+                    SET Aluno_idAluno = %s, Professor_idProfessor = %s, Sala_idSala = %s, Disciplina_idDisciplina = %s
+                    WHERE idInscrição = %s
+                """
+
+            values = (aluno_id, professor_id, sala_id, disciplina_id, self.inscricao_id)
             cursor.execute(query, values)
 
             # Commit da transação
             connection.commit()
 
-            # Emitir o sinal indicando que uma nova inscrição foi adicionada
+            # Emitir o sinal indicando que uma nova inscrição foi adicionada ou atualizada
             self.inscricao_atualizada.emit()
 
-            # Fechar a janela após a inclusão
+            # Fechar a janela após a inclusão ou atualização
             self.accept()
 
         except Exception as e:
-            print("Erro ao incluir inscrição:", e)
+            print("Erro ao incluir/atualizar inscrição:", e)
 
         finally:
             if connection.is_connected():
                 cursor.close()
                 connection.close()
 
-    def carregar_dados_inscricao(self, aluno_id, professor_id, sala_id, disciplina_id):
+    def carregar_dados_inscricao(self, inscricao_id):
         # Método para carregar os dados de uma inscrição existente
+        try:
+            connection = conecta()
+            cursor = connection.cursor()
 
-        # Lógica para carregar os valores nos combos com base nos IDs fornecidos
-        aluno_index = self.comboAlunos.findData(aluno_id)
-        professor_index = self.comboProfessores.findData(professor_id)
-        sala_index = self.comboSalas.findData(sala_id)
-        disciplina_index = self.comboDisciplinas.findData(disciplina_id)
+            # Consultar os dados da sala pelo ID
+            query = """
+                SELECT 
+                    Aluno_idAluno, 
+                    Professor_idProfessor, 
+                    Sala_idSala, 
+                    Disciplina_idDisciplina 
+                FROM inscrição 
+                WHERE idInscrição = %s
+            """
+            cursor.execute(query, (inscricao_id,))
 
-        # Selecionar os valores corretos nos combos
-        if aluno_index != -1:
-            self.comboAlunos.setCurrentIndex(aluno_index)
+            inscricao_data = cursor.fetchone()
 
-        if professor_index != -1:
-            self.comboProfessores.setCurrentIndex(professor_index)
+            if inscricao_data:
+                # Lógica para carregar os valores nos combos com base nos IDs fornecidos
+                aluno_index = self.comboAlunos.findData(inscricao_data[0])
+                professor_index = self.comboProfessores.findData(inscricao_data[1])
+                sala_index = self.comboSalas.findData(inscricao_data[2])
+                disciplina_index = self.comboDisciplinas.findData(inscricao_data[3])
 
-        if sala_index != -1:
-            self.comboSalas.setCurrentIndex(sala_index)
+                # Selecionar os valores corretos nos combos
+                if aluno_index != -1:
+                    self.comboAlunos.setCurrentIndex(aluno_index)
 
-        if disciplina_index != -1:
-            self.comboDisciplinas.setCurrentIndex(disciplina_index)
+                if professor_index != -1:
+                    self.comboProfessores.setCurrentIndex(professor_index)
+
+                if sala_index != -1:
+                    self.comboSalas.setCurrentIndex(sala_index)
+
+                if disciplina_index != -1:
+                    self.comboDisciplinas.setCurrentIndex(disciplina_index)
+
+        except Exception as e:
+            print("Erro ao carregar dados da inscrição:", e)
+
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
 
     def fechar_janela(self):
         # Fechar a janela sem fazer alterações
