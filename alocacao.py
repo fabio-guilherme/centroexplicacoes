@@ -1,6 +1,8 @@
 from PyQt6.QtWidgets import QDialog, QMessageBox, QComboBox
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import pyqtSignal
+from mysql.connector import IntegrityError
+
 from mysql_connector import conecta, verificar_existencia_id
 
 class Alocacao(QDialog):
@@ -21,6 +23,11 @@ class Alocacao(QDialog):
 
     def initUI(self):
         self.carregar_combos()
+
+        # Desmarcar seleções nos combos
+        self.comboDisciplinas.setCurrentIndex(-1)
+        self.comboProfessores.setCurrentIndex(-1)
+
         self.btnSalvar.clicked.connect(self.salvar_alocacao)
         self.btnCancelar.clicked.connect(self.fechar_janela)
 
@@ -60,7 +67,7 @@ class Alocacao(QDialog):
 
         # Lógica para verificar se os IDs existem e estão corretos
         if not verificar_existencia_id('professor', professor_id) or \
-           not verificar_existencia_id('disciplina', disciplina_id):
+                not verificar_existencia_id('disciplina', disciplina_id):
             QMessageBox.warning(self, 'IDs Inválidos', 'Por favor, insira IDs válidos para Professor e Disciplina.')
             return
 
@@ -82,6 +89,11 @@ class Alocacao(QDialog):
 
             # Fechar a janela após a inclusão
             self.accept()
+
+        except IntegrityError as e:
+            # Chave duplicada, exibir aviso
+            QMessageBox.warning(self, 'Chave Duplicada',
+                                'Esta alocação já existe. Por favor, escolha valores diferentes.')
 
         except Exception as e:
             print("Erro ao incluir alocação:", e)
