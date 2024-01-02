@@ -7,6 +7,7 @@ from disciplinas import Disciplinas
 from professores import Professores
 from salas import Salas
 from alocacoes import Alocacoes
+from inscricoes import Inscricoes
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -28,11 +29,13 @@ class MainWindow(QMainWindow):
         self.professores_screen = Professores()
         self.salas_screen = Salas()
         self.alocacoes_screen = Alocacoes()
+        self.inscricoes_screen = Inscricoes()
         self.stacked_widget.addWidget(self.alunos_screen)
         self.stacked_widget.addWidget(self.disciplinas_screen)
         self.stacked_widget.addWidget(self.professores_screen)
         self.stacked_widget.addWidget(self.salas_screen)
         self.stacked_widget.addWidget(self.alocacoes_screen)
+        self.stacked_widget.addWidget(self.inscricoes_screen)
 
         # Definir a tela inicial como um widget vazio
         #self.stacked_widget.setCurrentWidget(None)
@@ -63,6 +66,11 @@ class MainWindow(QMainWindow):
         self.action_alocacoes.triggered.connect(self.show_alocacoes_screen)
         self.menuCadastros.addAction(self.action_alocacoes)
 
+        # Ação do menu para abrir a tela de Inscrições
+        self.action_inscricoes = QAction('Inscrições', self)
+        self.action_inscricoes.triggered.connect(self.show_inscricoes_screen)
+        self.menuCadastros.addAction(self.action_inscricoes)
+
     def show_alunos_screen(self):
         self.stacked_widget.setCurrentWidget(self.alunos_screen)
 
@@ -77,6 +85,9 @@ class MainWindow(QMainWindow):
 
     def show_alocacoes_screen(self):
         self.stacked_widget.setCurrentWidget(self.alocacoes_screen)
+
+    def show_inscricoes_screen(self):
+        self.stacked_widget.setCurrentWidget(self.inscricoes_screen)
 
 if __name__ == '__main__':
     app = QApplication([])

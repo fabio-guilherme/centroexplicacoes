@@ -11,9 +11,9 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Alocações</string>
+   <string>Inscrições</string>
   </property>
-  <widget class="QTableWidget" name="tableAlocacoes">
+  <widget class="QTableWidget" name="tableInscricoes">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -24,26 +24,44 @@
    </property>
    <column>
     <property name="text">
-     <string>ID Professor</string>
+     <string>ID</string>
     </property>
    </column>
    <column>
     <property name="text">
-     <string>Nome Professor</string>
+     <string>Aluno</string>
     </property>
    </column>
    <column>
     <property name="text">
-     <string>ID Disciplina</string>
+     <string>Professor</string>
     </property>
    </column>
    <column>
     <property name="text">
-     <string>Designação Disciplina</string>
+     <string>Sala</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Disciplina</string>
     </property>
    </column>
   </widget>
   <widget class="QPushButton" name="btnIncluir">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>560</y>
+     <width>120</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Incluir Inscrição</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnAlterar">
    <property name="geometry">
     <rect>
      <x>500</x>
@@ -53,20 +71,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Incluir Alocação</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnAlterar">
-   <property name="geometry">
-    <rect>
-     <x>500</x>
-     <y>510</y>
-     <width>0</width>
-     <height>0</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Alterar Alocação</string>
+    <string>Alterar Inscrição</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btnExcluir">
@@ -79,7 +84,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Excluir Alocação</string>
+    <string>Excluir Inscrição</string>
    </property>
   </widget>
  </widget>
