@@ -1,50 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
-    <class>Dialog</class>
-    <widget class="QDialog" name="Dialog">
-        <property name="geometry">
-            <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>400</width>
-                <height>300</height>
-            </rect>
-        </property>
-        <property name="windowTitle">
-            <string>Aula</string>
-        </property>
-        <widget class="QWidget" name="formLayoutWidget">
-            <layout class="QFormLayout" name="formLayout">
-                <item row="0" column="0">
-                    <widget class="QComboBox" name="comboInscricao"/>
-                </item>
-                <item row="1" column="0">
-                    <widget class="QDateEdit" name="dateEdit">
-                        <property name="displayFormat">
-                            <string>yyyy-MM-dd</string>
-                        </property>
-                    </widget>
-                </item>
-                <item row="2" column="0">
-                    <widget class="QTimeEdit" name="timeEdit"/>
-                </item>
-                <item row="3" column="0">
-                    <widget class="QPushButton" name="btnSalvar">
-                        <property name="text">
-                            <string>Salvar</string>
-                        </property>
-                    </widget>
-                </item>
-                <item row="3" column="1">
-                    <widget class="QPushButton" name="btnCancelar">
-                        <property name="text">
-                            <string>Cancelar</string>
-                        </property>
-                    </widget>
-                </item>
-            </layout>
-        </widget>
-    </widget>
-    <resources/>
-    <connections/>
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Aula</string>
+  </property>
+  <widget class="QPushButton" name="btnCancelar">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>250</y>
+     <width>100</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cancelar</string>
+   </property>
+  </widget>
+  <widget class="QTimeEdit" name="timeEdit">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>130</y>
+     <width>55</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelData">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>80</y>
+     <width>32</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Data:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelHora">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>130</y>
+     <width>33</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Hora:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelInscricao">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>30</y>
+     <width>58</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Inscrição:</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnSalvar">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>250</y>
+     <width>100</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Salvar</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboInscricao">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>30</y>
+     <width>103</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QDateEdit" name="dateEdit">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>80</y>
+     <width>91</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="displayFormat">
+    <string>yyyy-MM-dd</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
 </ui>

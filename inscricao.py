@@ -91,6 +91,7 @@ class Inscricao(QDialog):
                     INSERT INTO inscrição (Aluno_idAluno, Professor_idProfessor, Sala_idSala, Disciplina_idDisciplina)
                     VALUES (%s, %s, %s, %s)
                 """
+                values = (aluno_id, professor_id, sala_id, disciplina_id)
             else:
                 # Se inscricao_id for diferente de 0, é uma atualização, fazer o update
                 query = """
@@ -98,8 +99,8 @@ class Inscricao(QDialog):
                     SET Aluno_idAluno = %s, Professor_idProfessor = %s, Sala_idSala = %s, Disciplina_idDisciplina = %s
                     WHERE idInscrição = %s
                 """
+                values = (aluno_id, professor_id, sala_id, disciplina_id, self.inscricao_id)
 
-            values = (aluno_id, professor_id, sala_id, disciplina_id, self.inscricao_id)
             cursor.execute(query, values)
 
             # Commit da transação

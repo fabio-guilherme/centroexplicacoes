@@ -69,8 +69,16 @@ class Aula(QDialog):
             cursor = connection.cursor()
 
             # Lógica para salvar a aula no banco de dados
-            query = "INSERT INTO aula (data, hora, Inscrição_idInscrição) VALUES (%s, %s, %s)"
-            values = (data, hora, inscricao_id)
+
+            if self.aula_id == 0:
+                # Se aula_id for 0, é uma nova inscrição, fazer a inserção
+                query = "INSERT INTO aula (data, hora, Inscrição_idInscrição) VALUES (%s, %s, %s)"
+                values = (data, hora, inscricao_id)
+            else:
+                # Se aula_id for diferente de 0, é uma atualização, fazer o update
+                query = "UPDATE aula SET data = %s, hora = %s, Inscrição_idInscrição = %s WHERE idAula = %s"
+                values = (data, hora, inscricao_id, self.aula_id)
+
             cursor.execute(query, values)
 
             # Commit da transação
