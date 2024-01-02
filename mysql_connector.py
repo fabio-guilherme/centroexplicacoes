@@ -8,7 +8,7 @@ def conecta():
                 database="centroexplicacoes2"
             )
 
-def verificar_existencia_id(self, tabela, id):
+def verificar_existencia_id(tabela, id):
     # Lógica para verificar se um ID existe em uma tabela específica
     try:
         connection = conecta()

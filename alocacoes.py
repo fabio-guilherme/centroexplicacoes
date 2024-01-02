@@ -15,6 +15,8 @@ class Alocacoes(QDialog):
         self.atualizar_lista_alocacoes()
 
     def initUI(self):
+        self.btnAlterar.hide()
+
         self.btnIncluir.clicked.connect(self.abrir_janela_alocacao)
         self.btnAlterar.clicked.connect(self.abrir_janela_alocacao_para_alterar)
         self.btnExcluir.clicked.connect(self.excluir_alocacao)
@@ -30,8 +32,8 @@ class Alocacoes(QDialog):
 
         self.atualizar_lista_alocacoes()
 
-    def abrir_janela_alocacao(self):
-        janela_alocacao = Alocacao()
+    def abrir_janela_alocacao(self, disciplina_id=0, professor_id=0):
+        janela_alocacao = Alocacao(disciplina_id, professor_id)
         janela_alocacao.alocacao_atualizada.connect(self.atualizar_lista_alocacoes)
         janela_alocacao.exec()
 
@@ -40,14 +42,12 @@ class Alocacoes(QDialog):
         selected_row = self.tableAlocacoes.currentRow()
 
         if selected_row >= 0:
-            # Obter o ID da alocação a partir da coluna 0 (ID)
-            alocacao_id = int(self.tableAlocacoes.item(selected_row, 0).text())
+            # Obter os IDs da disciplina e do professor a partir das coluna 0 e 2
+            disciplina_id = int(self.tableAlocacoes.item(selected_row, 0).text())
+            professor_id = int(self.tableAlocacoes.item(selected_row, 2).text())
 
             # Abrir a janela de alocação para edição
-            janela_alocacao = Alocacao()
-            janela_alocacao.carregar_alocacao(alocacao_id)
-            janela_alocacao.alocacao_atualizada.connect(self.atualizar_lista_alocacoes)
-            janela_alocacao.exec()
+            self.abrir_janela_alocacao(disciplina_id, professor_id)
         else:
             # Nenhuma linha selecionada, exibir mensagem informativa
             QMessageBox.information(self, 'Seleção Necessária', 'Por favor, selecione uma alocação para editar.')
@@ -57,8 +57,9 @@ class Alocacoes(QDialog):
         selected_row = self.tableAlocacoes.currentRow()
 
         if selected_row >= 0:
-            # Obter o ID da alocação a partir da coluna 0 (ID)
-            alocacao_id = int(self.tableAlocacoes.item(selected_row, 0).text())
+            # Obter os IDs da disciplina e do professor a partir das coluna 0 e 2
+            disciplina_id = int(self.tableAlocacoes.item(selected_row, 0).text())
+            professor_id = int(self.tableAlocacoes.item(selected_row, 2).text())
 
             # Exibir uma mensagem de confirmação
             reply = QMessageBox.question(
@@ -70,20 +71,20 @@ class Alocacoes(QDialog):
 
             if reply == QMessageBox.StandardButton.Yes:
                 # Confirmado, prosseguir com a exclusão
-                self.realizar_exclusao_alocacao(alocacao_id)
+                self.realizar_exclusao_alocacao(professor_id, disciplina_id)
         else:
             # Nenhuma linha selecionada, exibir mensagem informativa
             QMessageBox.information(self, 'Seleção Necessária', 'Por favor, selecione uma alocação para excluir.')
 
-    def realizar_exclusao_alocacao(self, alocacao_id):
+    def realizar_exclusao_alocacao(self, disciplina_id, professor_id):
         # Lógica para excluir uma alocação no banco de dados
         try:
             connection = conecta()
             cursor = connection.cursor()
 
             # Excluir a alocação
-            query = "DELETE FROM disciplina_has_professor WHERE idAlocacao = %s"
-            cursor.execute(query, (alocacao_id,))
+            query = "DELETE FROM disciplina_has_professor WHERE Disciplina_idDisciplina = %s AND Professor_idProfessor = %s"
+            cursor.execute(query, (disciplina_id, professor_id,))
 
             # Commit da transação
             connection.commit()
@@ -105,8 +106,17 @@ class Alocacoes(QDialog):
             connection = conecta()
             cursor = connection.cursor()
 
-            # Consulta para obter todas as alocações
-            query = "SELECT * FROM disciplina_has_professor"
+            # Consulta para obter todas as alocações com informações adicionais
+            query = """
+                SELECT 
+                    a.Disciplina_idDisciplina,
+                    d.Designacao,
+                    a.Professor_idProfessor,
+                    p.Nome
+                FROM disciplina_has_professor a
+                INNER JOIN professor p ON a.Professor_idProfessor = p.idProfessor
+                INNER JOIN disciplina d ON a.Disciplina_idDisciplina = d.idDisciplina
+            """
             cursor.execute(query)
 
             # Limpar a tabela antes de adicionar novos dados
