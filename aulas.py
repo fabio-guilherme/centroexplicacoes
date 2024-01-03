@@ -1,4 +1,4 @@
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QDateTime
 from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QMessageBox, QTableWidget, QAbstractItemView, QHeaderView
 from PyQt6.uic import loadUi
 from mysql_connector import conecta
@@ -32,9 +32,15 @@ class Aulas(QDialog):
 
     def abrir_janela_aula(self, aula_id=0):
         # Abrir a janela de aula para inclusão
-        janela_inscricao = Aula(aula_id)
-        janela_inscricao.aula_atualizada.connect(self.atualizar_lista_aulas)
-        janela_inscricao.exec()
+        janela_aula = Aula(aula_id)
+
+        if aula_id == 0:
+            # Se é uma nova aula, definir a data atual
+            data_atual = QDateTime.currentDateTime().date()
+            janela_aula.dateEdit.setDate(data_atual)
+
+        janela_aula.aula_atualizada.connect(self.atualizar_lista_aulas)
+        janela_aula.exec()
 
     def abrir_janela_aula_para_alterar(self):
         # Obter a linha selecionada

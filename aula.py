@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QDialog, QMessageBox, QComboBox
 from PyQt6.uic import loadUi
-from PyQt6.QtCore import pyqtSignal, Qt
+from PyQt6.QtCore import pyqtSignal, Qt, QDate, QTime
+from PyQt6.QtCore import QDateTime
 from mysql_connector import conecta, verificar_existencia_id
 
 class Aula(QDialog):
@@ -119,11 +120,11 @@ class Aula(QDialog):
                     self.comboInscricao.setCurrentIndex(inscricao_index)
 
                 # Converter a data e hora para o formato apropriado
-                data_formatada = Qt.QDateTime.fromString(aula_data[0], Qt.DateFormat.ISODate)
-                self.dateEdit.setDate(data_formatada.date())
+                data_formatada = QDate((aula_data[0]).year, (aula_data[0]).month, (aula_data[0]).day)
+                self.dateEdit.setDate(data_formatada)
 
-                hora_formatada = Qt.QDateTime.fromString(aula_data[1], Qt.DateFormat.DefaultLocaleLongDate)
-                self.timeEdit.setTime(hora_formatada.time())
+                hora_formatada = QTime.fromString(aula_data[1], "HH:mm:ss")
+                self.timeEdit.setTime(hora_formatada)
 
         except Exception as e:
             print("Erro ao carregar dados da aula:", e)
@@ -132,6 +133,7 @@ class Aula(QDialog):
             if connection.is_connected():
                 cursor.close()
                 connection.close()
+
 
     def fechar_janela(self):
         # Fechar a janela sem fazer alterações
