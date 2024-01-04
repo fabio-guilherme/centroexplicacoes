@@ -54,6 +54,8 @@ class Disciplinas(QMainWindow):
 
         except Exception as e:
             print("Erro ao consultar disciplinas:", e)
+            # Mostrar mensagem de erro para o utilizador
+            QMessageBox.critical(self, 'Erro', f"Erro ao consultar disciplinas:\n{str(e)}")
 
         finally:
             if connection.is_connected():
@@ -120,6 +122,8 @@ class Disciplinas(QMainWindow):
 
         except Exception as e:
             print("Erro ao excluir disciplina:", e)
+            # Mostrar mensagem de erro para o utilizador
+            QMessageBox.critical(self, 'Erro', f"Erro ao excluir disciplina:\n{str(e)}")
 
         finally:
             if connection.is_connected():

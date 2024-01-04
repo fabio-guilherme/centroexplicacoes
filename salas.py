@@ -55,6 +55,8 @@ class Salas(QMainWindow):
 
         except Exception as e:
             print("Erro ao consultar salas:", e)
+            # Mostrar mensagem de erro para o utilizador
+            QMessageBox.critical(self, 'Erro', f"Erro ao consultar salas:\n{str(e)}")
 
         finally:
             if connection.is_connected():
@@ -121,6 +123,8 @@ class Salas(QMainWindow):
 
         except Exception as e:
             print("Erro ao excluir sala:", e)
+            # Mostrar mensagem de erro para o utilizador
+            QMessageBox.critical(self, 'Erro', f"Erro ao excluir sala:\n{str(e)}")
 
         finally:
             if connection.is_connected():

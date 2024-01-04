@@ -91,6 +91,8 @@ class Inscricoes(QDialog):
 
         except Exception as e:
             print("Erro ao excluir inscrição:", e)
+            # Mostrar mensagem de erro para o utilizador
+            QMessageBox.critical(self, 'Erro', f"Erro ao excluir inscrição:\n{str(e)}")
 
         finally:
             if connection.is_connected():
@@ -136,6 +138,8 @@ class Inscricoes(QDialog):
 
         except Exception as e:
             print("Erro ao consultar inscrições:", e)
+            # Mostrar mensagem de erro para o utilizador
+            QMessageBox.critical(self, 'Erro', f"Erro ao consultar inscrições:\n{str(e)}")
 
         finally:
             if connection.is_connected():

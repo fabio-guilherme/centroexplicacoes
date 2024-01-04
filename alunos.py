@@ -55,6 +55,8 @@ class Alunos(QMainWindow):
 
         except Exception as e:
             print("Erro ao consultar alunos:", e)
+            # Mostrar mensagem de erro para o utilizador
+            QMessageBox.critical(self, 'Erro', f"Erro ao consultar alunos:\n{str(e)}")
 
         finally:
             if connection.is_connected():
@@ -121,6 +123,8 @@ class Alunos(QMainWindow):
 
         except Exception as e:
             print("Erro ao excluir aluno:", e)
+            # Mostrar mensagem de erro para o utilizador
+            QMessageBox.critical(self, 'Erro', f"Erro ao excluir aluno:\n{str(e)}")
 
         finally:
             if connection.is_connected():

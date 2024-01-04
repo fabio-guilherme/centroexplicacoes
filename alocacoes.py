@@ -94,6 +94,8 @@ class Alocacoes(QDialog):
 
         except Exception as e:
             print("Erro ao excluir alocação:", e)
+            # Mostrar mensagem de erro para o utilizador
+            QMessageBox.critical(self, 'Erro', f"Erro ao excluir alocação:\n{str(e)}")
 
         finally:
             if connection.is_connected():
@@ -136,6 +138,8 @@ class Alocacoes(QDialog):
 
         except Exception as e:
             print("Erro ao consultar alocações:", e)
+            # Mostrar mensagem de erro para o utilizador
+            QMessageBox.critical(self, 'Erro', f"Erro ao consultar alocações:\n{str(e)}")
 
         finally:
             if connection.is_connected():

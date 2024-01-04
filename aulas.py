@@ -97,6 +97,8 @@ class Aulas(QDialog):
 
         except Exception as e:
             print("Erro ao excluir aula:", e)
+            # Mostrar mensagem de erro para o utilizador
+            QMessageBox.critical(self, 'Erro', f"Erro ao excluir aula:\n{str(e)}")
 
         finally:
             if connection.is_connected():
@@ -130,6 +132,8 @@ class Aulas(QDialog):
 
         except Exception as e:
             print("Erro ao consultar aulas:", e)
+            # Mostrar mensagem de erro para o utilizador
+            QMessageBox.critical(self, 'Erro', f"Erro ao consultar aulas:\n{str(e)}")
 
         finally:
             if connection.is_connected():
