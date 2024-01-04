@@ -15,7 +15,7 @@ class Disciplinas(QMainWindow):
         self.consultar_disciplinas()
 
     def initUI(self):
-        self.btnIncluirDisciplina.clicked.connect(self.abrir_janela_disciplina)
+        self.btnInserirDisciplina.clicked.connect(self.abrir_janela_disciplina)
         self.btnAlterarDisciplina.clicked.connect(self.abrir_janela_disciplina_para_alterar)
         self.btnExcluirDisciplina.clicked.connect(self.excluir_disciplina)
 

@@ -24,22 +24,22 @@
    </property>
    <column>
     <property name="text">
-     <string>ID Professor</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Nome Professor</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
      <string>ID Disciplina</string>
     </property>
    </column>
    <column>
     <property name="text">
      <string>Designação Disciplina</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>ID Professor</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Nome Professor</string>
     </property>
    </column>
   </widget>

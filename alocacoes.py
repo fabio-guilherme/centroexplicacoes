@@ -71,7 +71,7 @@ class Alocacoes(QDialog):
 
             if reply == QMessageBox.StandardButton.Yes:
                 # Confirmado, prosseguir com a exclusão
-                self.realizar_exclusao_alocacao(professor_id, disciplina_id)
+                self.realizar_exclusao_alocacao(disciplina_id, professor_id)
         else:
             # Nenhuma linha selecionada, exibir mensagem informativa
             QMessageBox.information(self, 'Seleção Necessária', 'Por favor, selecione uma alocação para excluir.')

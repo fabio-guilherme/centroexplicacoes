@@ -49,7 +49,7 @@
      </property>
     </column>
    </widget>
-   <widget class="QPushButton" name="btnIncluirAluno">
+   <widget class="QPushButton" name="btnInserirAluno">
     <property name="geometry">
      <rect>
       <x>340</x>
@@ -59,7 +59,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Incluir Aluno</string>
+     <string>Inserir Aluno</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnAlterarAluno">

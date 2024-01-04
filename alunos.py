@@ -15,7 +15,7 @@ class Alunos(QMainWindow):
         self.consultar_alunos()
 
     def initUI(self):
-        self.btnIncluirAluno.clicked.connect(self.abrir_janela_aluno)
+        self.btnInserirAluno.clicked.connect(self.abrir_janela_aluno)
         self.btnAlterarAluno.clicked.connect(self.abrir_janela_aluno_para_alterar)
         self.btnExcluirAluno.clicked.connect(self.excluir_aluno)
 

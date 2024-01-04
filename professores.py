@@ -15,7 +15,7 @@ class Professores(QMainWindow):
         self.consultar_professores()
 
     def initUI(self):
-        self.btnIncluirProfessor.clicked.connect(self.abrir_janela_professor)
+        self.btnInserirProfessor.clicked.connect(self.abrir_janela_professor)
         self.btnAlterarProfessor.clicked.connect(self.abrir_janela_professor_para_alterar)
         self.btnExcluirProfessor.clicked.connect(self.excluir_professor)
 
