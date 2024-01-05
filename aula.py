@@ -21,6 +21,9 @@ class Aula(QDialog):
     def initUI(self):
         self.carregar_combos()
 
+        # Desmarcar seleções nos combos
+        self.comboInscricao.setCurrentIndex(-1)
+
         self.btnSalvar.clicked.connect(self.salvar_aula)
         self.btnCancelar.clicked.connect(self.fechar_janela)
 
