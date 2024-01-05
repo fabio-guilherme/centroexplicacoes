@@ -1,4 +1,6 @@
 import mysql.connector
+from PyQt6.QtWidgets import QMessageBox
+
 
 def conecta():
     return mysql.connector.connect(
@@ -28,3 +30,15 @@ def verificar_existencia_id(tabela, id):
         if connection.is_connected():
             cursor.close()
             connection.close()
+
+def imprime_erro_exclusao(self, e, artigo, entidade):
+    mensagem_erro = f"Erro ao excluir {entidade}:"
+    print(mensagem_erro, e)
+    # Mostrar mensagem de erro para o utilizador
+    if e.errno == 1451:
+        # Utilizar expressão regular para extrair o nome da tabela referenciada
+        tabela_referenciada = str(e).split("`, CONSTRAINT `")[0].split(".`")[1]
+        mensagem = f"Não é possível excluir {artigo} {entidade}. A referência à tabela '{tabela_referenciada}' não permite a exclusão."
+        QMessageBox.critical(self, 'Erro de Integridade Referencial', mensagem)
+    else:
+        QMessageBox.critical(self, 'Erro', mensagem_erro + f"\n{str(e)}")

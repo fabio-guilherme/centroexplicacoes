@@ -2,7 +2,7 @@ from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem, QDialog, QMessageBox,
     QHeaderView, QVBoxLayout, QWidget
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import Qt
-from mysql_connector import conecta
+from mysql_connector import conecta, imprime_erro_exclusao
 from sala import Sala
 
 class Salas(QMainWindow):
@@ -122,9 +122,7 @@ class Salas(QMainWindow):
             self.consultar_salas()
 
         except Exception as e:
-            print("Erro ao excluir sala:", e)
-            # Mostrar mensagem de erro para o utilizador
-            QMessageBox.critical(self, 'Erro', f"Erro ao excluir sala:\n{str(e)}")
+            imprime_erro_exclusao(self, e, "a", "sala")
 
         finally:
             if connection.is_connected():

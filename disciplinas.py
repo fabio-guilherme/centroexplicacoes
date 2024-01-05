@@ -2,7 +2,7 @@ from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem, QDialog, QMessageBox,
     QApplication, QHeaderView
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import Qt
-from mysql_connector import conecta
+from mysql_connector import conecta, imprime_erro_exclusao
 from disciplina import Disciplina
 
 class Disciplinas(QMainWindow):
@@ -121,9 +121,7 @@ class Disciplinas(QMainWindow):
             self.consultar_disciplinas()
 
         except Exception as e:
-            print("Erro ao excluir disciplina:", e)
-            # Mostrar mensagem de erro para o utilizador
-            QMessageBox.critical(self, 'Erro', f"Erro ao excluir disciplina:\n{str(e)}")
+            imprime_erro_exclusao(self, e, "a", "disciplina")
 
         finally:
             if connection.is_connected():
