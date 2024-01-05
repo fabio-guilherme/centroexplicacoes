@@ -93,9 +93,9 @@ class Inscricao(QDialog):
             return
 
         # Lógica para verificar se já existe um professor na mesma sala
-        if not self.verificar_professor_na_sala(professor_id, sala_id):
+        if not self.verificar_outro_professor_na_sala(professor_id, sala_id):
             QMessageBox.warning(self, 'Professor Existente',
-                                'Já existe um professor na sala. Escolha outra sala ou remova o professor existente.')
+                                'Já existe outro professor na sala. Escolha outra sala ou remova o professor existente.')
             return
 
         # Lógica para salvar a inscrição no banco de dados
@@ -187,15 +187,15 @@ class Inscricao(QDialog):
                 cursor.close()
                 connection.close()
 
-    def verificar_professor_na_sala(self, professor_id, sala_id):
+    def verificar_outro_professor_na_sala(self, professor_id, sala_id):
         try:
             connection = conecta()
             cursor = connection.cursor()
 
-            # Consultar se já existe um professor na sala
+            # Consultar se já existe outro professor na sala
             query = """
                 SELECT * FROM inscrição
-                WHERE Professor_idProfessor = %s AND Sala_idSala = %s
+                WHERE Professor_idProfessor != %s AND Sala_idSala = %s
             """
             cursor.execute(query, (professor_id, sala_id))
 
