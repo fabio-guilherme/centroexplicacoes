@@ -108,8 +108,16 @@ class Aulas(QDialog):
             connection = conecta()
             cursor = connection.cursor()
 
-            # Consulta para obter todas as aulas
-            query = "SELECT * FROM aula"
+            # Consulta para obter todas as aulas com informações relacionadas
+            query = """
+                SELECT aula.idAula, aula.data, aula.hora, aula.Inscrição_idInscrição, 
+                       aluno.Nome AS NomeAluno, professor.Nome AS NomeProfessor, disciplina.Designacao AS Disciplina
+                FROM aula
+                INNER JOIN inscrição ON aula.Inscrição_idInscrição = inscrição.idInscrição
+                INNER JOIN aluno ON inscrição.Aluno_idAluno = aluno.idAluno
+                INNER JOIN professor ON inscrição.Professor_idProfessor = professor.idProfessor
+                INNER JOIN disciplina ON inscrição.Disciplina_idDisciplina = disciplina.idDisciplina
+            """
             cursor.execute(query)
 
             # Limpar a tabela antes de adicionar novos dados

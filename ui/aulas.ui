@@ -24,7 +24,7 @@
    </property>
    <column>
     <property name="text">
-     <string>ID</string>
+     <string>ID Aula</string>
     </property>
    </column>
    <column>
@@ -40,6 +40,21 @@
    <column>
     <property name="text">
      <string>ID Inscrição</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Aluno</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Professor</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Disciplina</string>
     </property>
    </column>
   </widget>
