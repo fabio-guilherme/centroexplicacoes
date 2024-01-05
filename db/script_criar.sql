@@ -1,4 +1,4 @@
--- Eliminar tabelas se existirem
+    -- Eliminar tabelas se existirem
 DROP TABLE IF EXISTS `disciplina_has_professor`;
 DROP TABLE IF EXISTS `aula`;
 DROP TABLE IF EXISTS `inscrição`;
@@ -11,9 +11,9 @@ DROP TABLE IF EXISTS `disciplina`;
 CREATE TABLE `aluno` (
     `idAluno` int AUTO_INCREMENT NOT NULL,
     `Nome` varchar(45) DEFAULT NULL,
-    `Contato` varchar(45) DEFAULT NULL,
+    `Contato` char(9) DEFAULT NULL,
     `Nensino` varchar(45) DEFAULT NULL,
-    `Nif` varchar(45) DEFAULT NULL,
+    `Nif` char(9) DEFAULT NULL,
     PRIMARY KEY (`idAluno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -29,8 +29,8 @@ CREATE TABLE `disciplina` (
 CREATE TABLE `professor` (
     `idProfessor` int AUTO_INCREMENT NOT NULL,
     `Nome` varchar(45) DEFAULT NULL,
-    `Contato` varchar(45) DEFAULT NULL,
-    `Nif` varchar(45) DEFAULT NULL,
+    `Contato` char(9) DEFAULT NULL,
+    `Nif` char(9) DEFAULT NULL,
     PRIMARY KEY (`idProfessor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

@@ -34,12 +34,29 @@ class Aluno(QDialog):
             QMessageBox.warning(self, 'Campos Vazios', 'Todos os campos são obrigatórios.')
             return
 
+        if not self.validar_contato(contato):
+            QMessageBox.warning(self, 'Contato Inválido', 'O Contato deve ter 9 dígitos numéricos.')
+            return
+
+        # Validar Nif e Contato
+        if not self.validar_nif(nif):
+            QMessageBox.warning(self, 'NIF Inválido', 'O NIF deve ter 9 dígitos numéricos.')
+            return
+
         if self.aluno_id:
             # Se aluno_id existe, atualizar o aluno
             self.atualizar_aluno(nome, contato, n_ensino, nif)
         else:
             # Caso contrário, incluir um novo aluno
             self.incluir_aluno(nome, contato, n_ensino, nif)
+
+    def validar_contato(self, contato):
+        # Verificar se o Contato tem 9 dígitos numéricos
+        return contato.isdigit() and len(contato) == 9
+
+    def validar_nif(self, nif):
+        # Verificar se o NIF tem 9 dígitos numéricos
+        return nif.isdigit() and len(nif) == 9
 
     def incluir_aluno(self, nome, contato, n_ensino, nif):
         # Lógica para incluir um novo aluno no banco de dados
