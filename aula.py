@@ -1,8 +1,7 @@
-from PyQt6.QtWidgets import QDialog, QMessageBox, QComboBox
+from PyQt6.QtWidgets import QDialog, QMessageBox, QLabel
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import pyqtSignal, Qt, QDate, QTime
-from PyQt6.QtCore import QDateTime
-from mysql_connector import conecta, verificar_existencia_id
+from db_util import conecta, verificar_existencia_id, carregar_combo
 
 class Aula(QDialog):
     aula_atualizada = pyqtSignal()
@@ -25,28 +24,60 @@ class Aula(QDialog):
         self.btnSalvar.clicked.connect(self.salvar_aula)
         self.btnCancelar.clicked.connect(self.fechar_janela)
 
+        # Adicionando atributos de QLabel para exibir nome do aluno, do professor e descrição da disciplina
+        self.labelAlunoValue = self.findChild(QLabel, 'labelAlunoValue')
+        self.labelProfessorValue = self.findChild(QLabel, 'labelProfessorValue')
+        self.labelDisciplinaValue = self.findChild(QLabel, 'labelDisciplinaValue')
+
+        # Conectar o sinal currentIndexChanged do comboInscricao à função atualizar_dados_inscricao
+        self.comboInscricao.currentIndexChanged.connect(self.atualizar_dados_inscricao)
+
     def carregar_combos(self):
         # Carregar dados do combo Inscricao
-        self.carregar_combo(self.comboInscricao, 'inscrição', 'idInscrição', 'idInscrição')
+        carregar_combo(self.comboInscricao, 'inscrição', 'idInscrição', 'idInscrição')
 
-    def carregar_combo(self, combo: QComboBox, tabela: str, id_coluna: str, nome_coluna: str):
+    def atualizar_dados_inscricao(self):
+        # Limpar os labels se nenhum item estiver selecionado
+        if self.comboInscricao.currentIndex() == -1:
+            self.labelAlunoValue.setText("")
+            self.labelProfessorValue.setText("")
+            self.labelDisciplinaValue.setText("")
+            return
+
+        # Obter o ID da inscrição selecionada
+        inscricao_id = self.comboInscricao.currentData()
+
+        # Obter dados da inscrição usando a função do MySQL Connector (substitua pelo nome da função real)
+        dados_inscricao = self.obter_dados_inscricao(inscricao_id)
+
+        # Atualizar os labels com os dados obtidos
+        self.labelAlunoValue.setText(dados_inscricao[0])
+        self.labelProfessorValue.setText(dados_inscricao[1])
+        self.labelDisciplinaValue.setText(dados_inscricao[2])
+
+    def obter_dados_inscricao(self, inscricao_id):
+        # Função para obter dados da inscrição com base no ID
         try:
             connection = conecta()
             cursor = connection.cursor()
 
-            # Selecionar todos os registros da tabela
-            query = f"SELECT {id_coluna}, {nome_coluna} FROM {tabela}"
-            cursor.execute(query)
+            # Consulta para obter dados da inscrição
+            query = """
+                SELECT aluno.Nome AS nome_aluno, professor.Nome AS nome_professor, disciplina.Designacao AS nome_disciplina
+                FROM inscrição
+                INNER JOIN aluno ON inscrição.Aluno_idAluno = aluno.idAluno
+                INNER JOIN professor ON inscrição.Professor_idProfessor = professor.idProfessor
+                INNER JOIN disciplina ON inscrição.Disciplina_idDisciplina = disciplina.idDisciplina
+                WHERE inscrição.idInscrição = %s
+            """
+            cursor.execute(query, (inscricao_id,))
+            dados_inscricao = cursor.fetchone()
 
-            # Limpar o combo antes de adicionar novos itens
-            combo.clear()
-
-            # Adicionar itens ao combo
-            for row in cursor.fetchall():
-                combo.addItem(f"{row[0]}", userData=row[0])
+            return dados_inscricao
 
         except Exception as e:
-            print(f"Erro ao carregar combo {tabela}: {e}")
+            print(f"Erro ao obter dados da inscrição: {e}")
+            return None
 
         finally:
             if connection.is_connected():
@@ -106,7 +137,16 @@ class Aula(QDialog):
             cursor = connection.cursor()
 
             # Consultar os dados da aula pelo ID
-            query = "SELECT data, hora, Inscrição_idInscrição FROM aula WHERE idAula = %s"
+            query = """
+                SELECT aula.data, aula.hora, aula.Inscrição_idInscrição,
+                       aluno.Nome AS NomeAluno, professor.Nome AS NomeProfessor, disciplina.Designacao AS Disciplina
+                FROM aula
+                INNER JOIN inscrição ON aula.Inscrição_idInscrição = inscrição.idInscrição
+                INNER JOIN aluno ON inscrição.Aluno_idAluno = aluno.idAluno
+                INNER JOIN professor ON inscrição.Professor_idProfessor = professor.idProfessor
+                INNER JOIN disciplina ON inscrição.Disciplina_idDisciplina = disciplina.idDisciplina
+                WHERE aula.idAula = %s
+            """
             cursor.execute(query, (aula_id,))
 
             aula_data = cursor.fetchone()
@@ -126,6 +166,11 @@ class Aula(QDialog):
                 hora_formatada = QTime.fromString(aula_data[1], "HH:mm:ss")
                 self.timeEdit.setTime(hora_formatada)
 
+                # Exibir nome do aluno, do professor e descrição da disciplina nos QLabel correspondentes
+                self.labelAlunoValue.setText(aula_data[3])
+                self.labelProfessorValue.setText(aula_data[4])
+                self.labelDisciplinaValue.setText(aula_data[5])
+
         except Exception as e:
             print("Erro ao carregar dados da aula:", e)
 
@@ -133,7 +178,6 @@ class Aula(QDialog):
             if connection.is_connected():
                 cursor.close()
                 connection.close()
-
 
     def fechar_janela(self):
         # Fechar a janela sem fazer alterações

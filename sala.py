@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QDialog, QMessageBox
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import pyqtSignal
-from mysql_connector import conecta
+from db_util import conecta
 
 class Sala(QDialog):
     sala_atualizada = pyqtSignal()

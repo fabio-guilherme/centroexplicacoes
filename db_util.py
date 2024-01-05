@@ -1,6 +1,5 @@
 import mysql.connector
-from PyQt6.QtWidgets import QMessageBox
-
+from PyQt6.QtWidgets import QMessageBox, QComboBox
 
 def conecta():
     return mysql.connector.connect(
@@ -25,6 +24,33 @@ def verificar_existencia_id(tabela, id):
 
     except Exception as e:
         print(f"Erro ao verificar existência de ID na tabela {tabela}:", e)
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+
+def carregar_combo(combo: QComboBox, tabela: str, id_coluna: str, nome_coluna: str):
+    try:
+        connection = conecta()
+        cursor = connection.cursor()
+
+        # Selecionar todos os registros da tabela
+        query = f"SELECT {id_coluna}, {nome_coluna} FROM {tabela}"
+        cursor.execute(query)
+
+        # Limpar o combo antes de adicionar novos itens
+        combo.clear()
+
+        # Adicionar itens ao combo
+        for row in cursor.fetchall():
+            if id_coluna == nome_coluna:
+                combo.addItem(f"{row[0]}", userData=row[0])
+            else:
+                combo.addItem(f"{row[0]} - {row[1]}", userData=row[0])
+
+    except Exception as e:
+        print(f"Erro ao carregar combo {tabela}: {e}")
 
     finally:
         if connection.is_connected():

@@ -2,7 +2,7 @@ from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem, QDialog, QMessageBox,
     QHeaderView
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import Qt
-from mysql_connector import conecta, imprime_erro_exclusao
+from db_util import conecta, imprime_erro_exclusao
 from aluno import Aluno
 
 class Alunos(QMainWindow):

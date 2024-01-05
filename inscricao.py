@@ -1,7 +1,7 @@
-from PyQt6.QtWidgets import QDialog, QMessageBox, QComboBox
+from PyQt6.QtWidgets import QDialog, QMessageBox
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import pyqtSignal
-from mysql_connector import conecta, verificar_existencia_id
+from db_util import conecta, verificar_existencia_id, carregar_combo
 
 class Inscricao(QDialog):
     inscricao_atualizada = pyqtSignal()
@@ -32,37 +32,10 @@ class Inscricao(QDialog):
 
     def carregar_combos(self):
         # Carregar dados das tabelas Aluno, Professor, Sala e Disciplina nos combos
-        self.carregar_combo(self.comboAlunos, 'aluno', 'idAluno', 'Nome')
-        self.carregar_combo(self.comboProfessores, 'professor', 'idProfessor', 'Nome')
-        self.carregar_combo(self.comboSalas, 'sala', 'idSala', 'idSala')  # Não especificado um campo descritivo
-        self.carregar_combo(self.comboDisciplinas, 'disciplina', 'idDisciplina', 'Designacao')
-
-    def carregar_combo(self, combo: QComboBox, tabela: str, id_coluna: str, nome_coluna: str):
-        try:
-            connection = conecta()
-            cursor = connection.cursor()
-
-            # Selecionar todos os registros da tabela
-            query = f"SELECT {id_coluna}, {nome_coluna} FROM {tabela}"
-            cursor.execute(query)
-
-            # Limpar o combo antes de adicionar novos itens
-            combo.clear()
-
-            # Adicionar itens ao combo
-            for row in cursor.fetchall():
-                if id_coluna == nome_coluna:
-                    combo.addItem(f"{row[0]}", userData=row[0])
-                else:
-                    combo.addItem(f"{row[0]} - {row[1]}", userData=row[0])
-
-        except Exception as e:
-            print(f"Erro ao carregar combo {tabela}: {e}")
-
-        finally:
-            if connection.is_connected():
-                cursor.close()
-                connection.close()
+        carregar_combo(self.comboAlunos, 'aluno', 'idAluno', 'Nome')
+        carregar_combo(self.comboProfessores, 'professor', 'idProfessor', 'Nome')
+        carregar_combo(self.comboSalas, 'sala', 'idSala', 'idSala')  # Não especificado um campo descritivo
+        carregar_combo(self.comboDisciplinas, 'disciplina', 'idDisciplina', 'Designacao')
 
     def salvar_inscricao(self):
         # Obter os dados do formulário

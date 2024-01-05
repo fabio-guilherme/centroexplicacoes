@@ -1,7 +1,7 @@
 from PyQt6.QtCore import Qt, QDateTime
 from PyQt6.QtWidgets import QDialog, QTableWidgetItem, QMessageBox, QTableWidget, QAbstractItemView, QHeaderView
 from PyQt6.uic import loadUi
-from mysql_connector import conecta, imprime_erro_exclusao
+from db_util import conecta, imprime_erro_exclusao
 from aula import Aula
 
 class Aulas(QDialog):

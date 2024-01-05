@@ -1,9 +1,8 @@
-from PyQt6.QtWidgets import QDialog, QMessageBox, QComboBox
+from PyQt6.QtWidgets import QDialog, QMessageBox
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import pyqtSignal
 from mysql.connector import IntegrityError
-
-from mysql_connector import conecta, verificar_existencia_id
+from db_util import conecta, verificar_existencia_id, carregar_combo
 
 class Alocacao(QDialog):
     alocacao_atualizada = pyqtSignal()
@@ -33,32 +32,8 @@ class Alocacao(QDialog):
 
     def carregar_combos(self):
         # Carregar dados das tabelas Disciplina e Professor nos combos
-        self.carregar_combo(self.comboDisciplinas, 'disciplina', 'idDisciplina', 'Designacao')
-        self.carregar_combo(self.comboProfessores, 'professor', 'idProfessor', 'Nome')
-
-    def carregar_combo(self, combo: QComboBox, tabela: str, id_coluna: str, nome_coluna: str):
-        try:
-            connection = conecta()
-            cursor = connection.cursor()
-
-            # Selecionar todos os registros da tabela
-            query = f"SELECT {id_coluna}, {nome_coluna} FROM {tabela}"
-            cursor.execute(query)
-
-            # Limpar o combo antes de adicionar novos itens
-            combo.clear()
-
-            # Adicionar itens ao combo
-            for row in cursor.fetchall():
-                combo.addItem(f"{row[0]} - {row[1]}", userData=row[0])
-
-        except Exception as e:
-            print(f"Erro ao carregar combo {tabela}: {e}")
-
-        finally:
-            if connection.is_connected():
-                cursor.close()
-                connection.close()
+        carregar_combo(self.comboDisciplinas, 'disciplina', 'idDisciplina', 'Designacao')
+        carregar_combo(self.comboProfessores, 'professor', 'idProfessor', 'Nome')
 
     def salvar_alocacao(self):
         # Obter os dados do formulário
