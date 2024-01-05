@@ -80,6 +80,24 @@ class Inscricao(QDialog):
                                 'Por favor, insira IDs válidos para Aluno, Professor, Sala e Disciplina.')
             return
 
+        # Lógica para verificar se a sala atingiu a capacidade máxima
+        if not self.verificar_capacidade_sala(sala_id):
+            QMessageBox.warning(self, 'Capacidade Excedida',
+                                'A sala atingiu a capacidade máxima de alunos. Escolha outra sala.')
+            return
+
+        # Lógica para verificar se a alocação de professor na disciplina está cadastrada
+        if not self.verificar_alocacao_professor_disciplina(professor_id, disciplina_id):
+            QMessageBox.warning(self, 'Alocação Inválida',
+                                'A alocação do Professor na Disciplina não está cadastrada.')
+            return
+
+        # Lógica para verificar se já existe um professor na mesma sala
+        if not self.verificar_professor_na_sala(professor_id, sala_id):
+            QMessageBox.warning(self, 'Professor Existente',
+                                'Já existe um professor na sala. Escolha outra sala ou remova o professor existente.')
+            return
+
         # Lógica para salvar a inscrição no banco de dados
         try:
             connection = conecta()
@@ -114,6 +132,78 @@ class Inscricao(QDialog):
 
         except Exception as e:
             print("Erro ao incluir/atualizar inscrição:", e)
+
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+
+    def verificar_capacidade_sala(self, sala_id):
+        try:
+            connection = conecta()
+            cursor = connection.cursor()
+
+            # Consultar a capacidade da sala
+            query = "SELECT Capacidade FROM sala WHERE idSala = %s"
+            cursor.execute(query, (sala_id,))
+            capacidade_sala = cursor.fetchone()[0]
+
+            # Consultar o número atual de inscrições na sala
+            query = "SELECT COUNT(*) FROM inscrição WHERE Sala_idSala = %s"
+            cursor.execute(query, (sala_id,))
+            inscricoes_na_sala = cursor.fetchone()[0]
+
+            return inscricoes_na_sala < capacidade_sala
+
+        except Exception as e:
+            print("Erro ao verificar capacidade da sala:", e)
+            return False
+
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+
+    def verificar_alocacao_professor_disciplina(self, professor_id, disciplina_id):
+        try:
+            connection = conecta()
+            cursor = connection.cursor()
+
+            # Consultar se a alocação de professor na disciplina está cadastrada
+            query = """
+                SELECT * FROM disciplina_has_professor
+                WHERE Disciplina_idDisciplina = %s AND Professor_idProfessor = %s
+            """
+            cursor.execute(query, (disciplina_id, professor_id))
+
+            return cursor.fetchone() is not None
+
+        except Exception as e:
+            print("Erro ao verificar alocação de Professor na Disciplina:", e)
+            return False
+
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+
+    def verificar_professor_na_sala(self, professor_id, sala_id):
+        try:
+            connection = conecta()
+            cursor = connection.cursor()
+
+            # Consultar se já existe um professor na sala
+            query = """
+                SELECT * FROM inscrição
+                WHERE Professor_idProfessor = %s AND Sala_idSala = %s
+            """
+            cursor.execute(query, (professor_id, sala_id))
+
+            return cursor.fetchone() is None
+
+        except Exception as e:
+            print("Erro ao verificar professor na sala:", e)
+            return False
 
         finally:
             if connection.is_connected():

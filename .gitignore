@@ -1,3 +1,8 @@
 
 .idea/workspace.xml
 __pycache__/
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+.idea/dataSources/2cca6899-bebb-4bba-9618-cad5a126d9f0.xml
+*.meta
+.idea/sqldialects.xml
