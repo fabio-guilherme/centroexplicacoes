@@ -18,12 +18,20 @@
     <item>
      <widget class="QMenuBar" name="menubar">
       <addaction name="menuCadastros"/>
+      <addaction name="menuConsultas"/>
      </widget>
     </item>
     <item>
      <widget class="QMenu" name="menuCadastros">
       <property name="title">
        <string>Cadastros</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QMenu" name="menuConsultas">
+      <property name="title">
+       <string>Consultas</string>
       </property>
      </widget>
     </item>
