@@ -8,16 +8,19 @@ class AulasPorProfessor(QDialog):
         loadUi("ui/aulas_por_professor.ui", self)
         self.initUI()
 
+    def initUI(self):
         # Carregar dados nos combos ao abrir a janela
         self.carregar_combos()
-
-    def initUI(self):
-        self.btnConsultar.clicked.connect(self.consultar_aulas)
 
         # Ajustar as larguras das colunas
         for column_index in range(self.tableResultados.columnCount()):
             self.tableResultados.horizontalHeader().setSectionResizeMode(column_index, QHeaderView.ResizeMode.Stretch)
 
+        # Desmarcar a seleção inicial do combo
+        self.comboProfessor.setCurrentIndex(-1)
+        self.comboDisciplina.setCurrentIndex(-1)
+
+        self.btnConsultar.clicked.connect(self.consultar_aulas)
 
     def carregar_combos(self):
         # Carregar dados nos combos (professores e disciplinas)
@@ -52,6 +55,11 @@ class AulasPorProfessor(QDialog):
         # Lógica para consultar aulas por professor e disciplina
         professor_id = self.comboProfessor.currentData()
         disciplina_id = self.comboDisciplina.currentData()
+
+        # Verificar se algum combo não está selecionado
+        if professor_id is None or disciplina_id is None:
+            QMessageBox.warning(self, 'Aviso', 'Selecione um professor e uma disciplina para a consulta.')
+            return
 
         try:
             connection = conecta()
