@@ -6,57 +6,98 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>200</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Aulas por Professor</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QLabel" name="labelProfessor">
-     <property name="text">
-      <string>Professor:</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QComboBox" name="comboProfessor">
-     <property name="editable">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="labelDisciplina">
-     <property name="text">
-      <string>Disciplina:</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QComboBox" name="comboDisciplina">
-     <property name="editable">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="btnConsultar">
-     <property name="text">
-      <string>Consultar</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QTableWidget" name="tableResultados">
-     <property name="visible">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-  </layout>
+  <widget class="QLabel" name="labelProfessor">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>15</y>
+     <width>61</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Professor:</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboProfessor">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>15</y>
+     <width>271</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="editable">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelDisciplina">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>50</y>
+     <width>62</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Disciplina:</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboDisciplina">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>50</y>
+     <width>271</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="editable">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnConsultar">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>560</y>
+     <width>120</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Consultar</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="tableResultados">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>80</y>
+     <width>761</width>
+     <height>471</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>Data</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Hora</string>
+    </property>
+   </column>
+  </widget>
  </widget>
  <resources/>
  <connections/>

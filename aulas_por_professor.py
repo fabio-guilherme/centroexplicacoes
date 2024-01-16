@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QDialog, QComboBox, QLabel, QPushButton, QTableWidget, QTableWidgetItem, QVBoxLayout
+from PyQt6.QtWidgets import QDialog, QComboBox, QTableWidgetItem, QHeaderView, QMessageBox
 from PyQt6.uic import loadUi
 from db_util import conecta
 
@@ -13,6 +13,11 @@ class AulasPorProfessor(QDialog):
 
     def initUI(self):
         self.btnConsultar.clicked.connect(self.consultar_aulas)
+
+        # Ajustar as larguras das colunas
+        for column_index in range(self.tableResultados.columnCount()):
+            self.tableResultados.horizontalHeader().setSectionResizeMode(column_index, QHeaderView.ResizeMode.Stretch)
+
 
     def carregar_combos(self):
         # Carregar dados nos combos (professores e disciplinas)
@@ -94,8 +99,6 @@ class AulasPorProfessor(QDialog):
                 self.tableResultados.setItem(row_index, 0, QTableWidgetItem(str(row_data[0])))
                 self.tableResultados.setItem(row_index, 1, QTableWidgetItem(str(row_data[1])))
 
-            # Tornar a tabela visível
-            self.tableResultados.setVisible(True)
         else:
-            # Não há resultados, ocultar a tabela
-            self.tableResultados.setVisible(False)
+            # Mensagem avisando
+            QMessageBox.information(self, 'Resultado', 'Não há aulas desta disciplina para este professor.')
