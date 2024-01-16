@@ -10,6 +10,7 @@ from alocacoes import Alocacoes
 from inscricoes import Inscricoes
 from aulas import Aulas
 from aulas_por_professor import AulasPorProfessor
+from aulas_por_aluno import AulasPorAluno
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -34,6 +35,7 @@ class MainWindow(QMainWindow):
         self.inscricoes_screen = Inscricoes()
         self.aulas_screen = Aulas()
         self.aulas_por_professor_screen = AulasPorProfessor()
+        self.aulas_por_aluno_screen = AulasPorAluno()
 
         self.stacked_widget.addWidget(self.alunos_screen)
         self.stacked_widget.addWidget(self.disciplinas_screen)
@@ -43,6 +45,7 @@ class MainWindow(QMainWindow):
         self.stacked_widget.addWidget(self.inscricoes_screen)
         self.stacked_widget.addWidget(self.aulas_screen)
         self.stacked_widget.addWidget(self.aulas_por_professor_screen)
+        self.stacked_widget.addWidget(self.aulas_por_aluno_screen)
 
         # Definir a tela inicial como um widget vazio
         #self.stacked_widget.setCurrentWidget(None)
@@ -88,6 +91,11 @@ class MainWindow(QMainWindow):
         self.action_aulas_por_professor.triggered.connect(self.show_aulas_por_professor_screen)
         self.menuConsultas.addAction(self.action_aulas_por_professor)
 
+        # Ação do menu para abrir a tela de Aulas por Aluno
+        self.action_aulas_por_aluno = QAction('Aulas por Aluno', self)
+        self.action_aulas_por_aluno.triggered.connect(self.show_aulas_por_aluno_screen)
+        self.menuConsultas.addAction(self.action_aulas_por_aluno)
+
     def show_alunos_screen(self):
         self.stacked_widget.setCurrentWidget(self.alunos_screen)
 
@@ -111,6 +119,9 @@ class MainWindow(QMainWindow):
 
     def show_aulas_por_professor_screen(self):
         self.stacked_widget.setCurrentWidget(self.aulas_por_professor_screen)
+
+    def show_aulas_por_aluno_screen(self):
+        self.stacked_widget.setCurrentWidget(self.aulas_por_aluno_screen)
 
 if __name__ == '__main__':
     app = QApplication([])
