@@ -30,7 +30,7 @@ def verificar_existencia_id(tabela, id):
             cursor.close()
             connection.close()
 
-def carregar_combo(combo: QComboBox, tabela: str, id_coluna: str, nome_coluna: str):
+def carregar_combo(combo: QComboBox, tabela: str, id_coluna: str, nome_coluna: str, limpar: bool = True):
     try:
         connection = conecta()
         cursor = connection.cursor()
@@ -39,8 +39,9 @@ def carregar_combo(combo: QComboBox, tabela: str, id_coluna: str, nome_coluna: s
         query = f"SELECT {id_coluna}, {nome_coluna} FROM {tabela}"
         cursor.execute(query)
 
-        # Limpar o combo antes de adicionar novos itens
-        combo.clear()
+        # Se limpar for True, limpar o combo antes de adicionar novos itens
+        if limpar:
+            combo.clear()
 
         # Adicionar itens ao combo
         for row in cursor.fetchall():

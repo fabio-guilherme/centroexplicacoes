@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QDialog, QComboBox, QTableWidgetItem, QHeaderView, QMessageBox
 from PyQt6.uic import loadUi
-from db_util import conecta
+from db_util import conecta, carregar_combo
 
 class AulasPorProfessor(QDialog):
     def __init__(self):
@@ -24,32 +24,8 @@ class AulasPorProfessor(QDialog):
 
     def carregar_combos(self):
         # Carregar dados nos combos (professores e disciplinas)
-        self.carregar_combo(self.comboProfessor, 'professor', 'idProfessor', 'Nome')
-        self.carregar_combo(self.comboDisciplina, 'disciplina', 'idDisciplina', 'Designacao')
-
-    def carregar_combo(self, combo: QComboBox, tabela: str, id_coluna: str, nome_coluna: str):
-        try:
-            connection = conecta()
-            cursor = connection.cursor()
-
-            # Selecionar todos os registros da tabela
-            query = f"SELECT {id_coluna}, {nome_coluna} FROM {tabela}"
-            cursor.execute(query)
-
-            # Limpar o combo antes de adicionar novos itens
-            combo.clear()
-
-            # Adicionar itens ao combo
-            for row in cursor.fetchall():
-                combo.addItem(f"{row[1]}", userData=row[0])
-
-        except Exception as e:
-            print(f"Erro ao carregar combo {tabela}: {e}")
-
-        finally:
-            if connection.is_connected():
-                cursor.close()
-                connection.close()
+        carregar_combo(self.comboProfessor, 'professor', 'idProfessor', 'Nome')
+        carregar_combo(self.comboDisciplina, 'disciplina', 'idDisciplina', 'Designacao')
 
     def consultar_aulas(self):
         # Lógica para consultar aulas por professor e disciplina
@@ -57,8 +33,11 @@ class AulasPorProfessor(QDialog):
         disciplina_id = self.comboDisciplina.currentData()
 
         # Verificar se algum combo não está selecionado
-        if professor_id is None or disciplina_id is None:
-            QMessageBox.warning(self, 'Aviso', 'Selecione um professor e uma disciplina para a consulta.')
+        if professor_id is None:
+            QMessageBox.warning(self, 'Aviso', 'Selecione um professor para a consulta.')
+            return
+        if disciplina_id is None:
+            QMessageBox.warning(self, 'Aviso', 'Selecione uma disciplina para a consulta.')
             return
 
         try:

@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QDialog, QComboBox, QTableWidgetItem, QHeaderView, QMessageBox
 from PyQt6.uic import loadUi
-from db_util import conecta
+from db_util import conecta, carregar_combo
+
 
 class AulasPorAluno(QDialog):
     def __init__(self):
@@ -9,6 +10,9 @@ class AulasPorAluno(QDialog):
         self.initUI()
 
     def initUI(self):
+        # Adicionar opção "Todas" no combo de disciplinas
+        self.comboDisciplina.addItem("Todas", userData=-1)
+
         # Carregar dados nos combos ao abrir a janela
         self.carregar_combos()
 
@@ -20,39 +24,12 @@ class AulasPorAluno(QDialog):
         self.comboAluno.setCurrentIndex(-1)
         self.comboDisciplina.setCurrentIndex(-1)
 
-        # Adicionar opção "Todas" no combo de disciplinas
-        self.comboDisciplina.addItem("Todas", userData=None)
-
         self.btnConsultar.clicked.connect(self.consultar_aulas)
 
     def carregar_combos(self):
         # Carregar dados nos combos (alunos e disciplinas)
-        self.carregar_combo(self.comboAluno, 'aluno', 'idAluno', 'Nome')
-        self.carregar_combo(self.comboDisciplina, 'disciplina', 'idDisciplina', 'Designacao')
-
-    def carregar_combo(self, combo: QComboBox, tabela: str, id_coluna: str, nome_coluna: str):
-        try:
-            connection = conecta()
-            cursor = connection.cursor()
-
-            # Selecionar todos os registros da tabela
-            query = f"SELECT {id_coluna}, {nome_coluna} FROM {tabela}"
-            cursor.execute(query)
-
-            # Limpar o combo antes de adicionar novos itens
-            combo.clear()
-
-            # Adicionar itens ao combo
-            for row in cursor.fetchall():
-                combo.addItem(f"{row[1]}", userData=row[0])
-
-        except Exception as e:
-            print(f"Erro ao carregar combo {tabela}: {e}")
-
-        finally:
-            if connection.is_connected():
-                cursor.close()
-                connection.close()
+        carregar_combo(self.comboAluno, 'aluno', 'idAluno', 'Nome')
+        carregar_combo(self.comboDisciplina, 'disciplina', 'idDisciplina', 'Designacao', False)
 
     def consultar_aulas(self):
         # Lógica para consultar aulas por aluno e disciplina
@@ -62,6 +39,9 @@ class AulasPorAluno(QDialog):
         # Verificar se algum combo não está selecionado
         if aluno_id is None:
             QMessageBox.warning(self, 'Aviso', 'Selecione um aluno para a consulta.')
+            return
+        if disciplina_id is None:
+            QMessageBox.warning(self, 'Aviso', 'Selecione uma disciplina para a consulta.')
             return
 
         try:
@@ -78,7 +58,7 @@ class AulasPorAluno(QDialog):
             """
 
             # Se uma disciplina foi selecionada, adicionar à condição da consulta
-            if disciplina_id:
+            if disciplina_id != -1:
                 query += " AND inscrição.Disciplina_idDisciplina = %s"
 
                 # Adicionar valores aos parâmetros da consulta
